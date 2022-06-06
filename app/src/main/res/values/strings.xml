@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">AwantrixProjects</string>
+    <string name="home">Home</string>
+    <string name="order">Order</string>
+    <string name="task">Task</string>
+    <string name="unlocked">Unlocked</string>
+</resources>
