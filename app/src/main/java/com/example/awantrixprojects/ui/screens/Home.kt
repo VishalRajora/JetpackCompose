@@ -33,9 +33,11 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun Home() {
+
     val homeViewModel: HomeViewModel = viewModel()
     val scaffoldState = rememberScaffoldState()
     Scaffold(scaffoldState = scaffoldState) {}
+
     LoginComposable(homeViewModel)
     Observer(homeViewModel, scaffoldState)
 
@@ -43,6 +45,7 @@ fun Home() {
 
 @Composable
 fun Observer(homeViewModel: HomeViewModel, scaffoldState: ScaffoldState) {
+
     LaunchedEffect(key1 = true) {
         homeViewModel.eventFlow.collectLatest {
             when (it) {
@@ -62,7 +65,6 @@ fun Observer(homeViewModel: HomeViewModel, scaffoldState: ScaffoldState) {
         }
     }
 }
-
 
 @Composable
 fun LoginComposable(homeViewModel: HomeViewModel) {
@@ -95,7 +97,9 @@ fun LoginComposable(homeViewModel: HomeViewModel) {
                 fontSize = 20.sp
             )
         )
+
         Spacer(modifier = Modifier.padding(10.dp))
+
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             //this is for email
             OutlinedTextField(
