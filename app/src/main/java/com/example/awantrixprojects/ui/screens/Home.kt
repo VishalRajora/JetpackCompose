@@ -31,6 +31,7 @@ import com.example.awantrixprojects.utils.HandelEvents
 import com.example.awantrixprojects.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
 
+
 @Composable
 fun Home() {
 
@@ -47,6 +48,7 @@ fun Home() {
 fun Observer(homeViewModel: HomeViewModel, scaffoldState: ScaffoldState) {
 
     LaunchedEffect(key1 = true) {
+
         homeViewModel.eventFlow.collectLatest {
             when (it) {
                 is HandelEvents.ShowErrorMessages -> {

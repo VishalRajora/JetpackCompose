@@ -21,7 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.rememberNavController
 import com.example.awantrixprojects.ui.theme.AwantrixProjectsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +52,7 @@ fun AppScreen(text: String) {
     Surface(modifier = Modifier.fillMaxSize())
     {
         Text(text = text, fontSize = 20.sp)
-
     }
-
 }
 
 @Composable
