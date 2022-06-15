@@ -7,6 +7,8 @@ import javax.inject.Inject
 
 class HomeRepo @Inject constructor(private val dao: MyDao) {
 
+
+
     suspend fun saveData(email: String, password: String) {
         val data = AuthModelClass(0, email, password, "", "")
         val result = dao.InsertAuth(data)

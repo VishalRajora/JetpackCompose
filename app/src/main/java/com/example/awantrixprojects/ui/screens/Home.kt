@@ -24,18 +24,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.awantrixprojects.R
 import com.example.awantrixprojects.ui.theme.AwantrixProjectsTheme
 import com.example.awantrixprojects.utils.HandelEvents
 import com.example.awantrixprojects.viewmodels.HomeViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
 @Composable
 fun Home() {
 
-    val homeViewModel: HomeViewModel = viewModel()
+    val homeViewModel: HomeViewModel = hiltViewModel()
     val scaffoldState = rememberScaffoldState()
     Scaffold(scaffoldState = scaffoldState) {}
 
@@ -65,6 +66,12 @@ fun Observer(homeViewModel: HomeViewModel, scaffoldState: ScaffoldState) {
                 }
             }
         }
+
+        launch {
+
+        }
+
+
     }
 }
 
@@ -138,7 +145,6 @@ fun LoginComposable(homeViewModel: HomeViewModel) {
                 onValueChange = {
                     passwordValue.value = it
                 },
-
                 label = {
                     Text(text = "Password ")
                 },
@@ -178,7 +184,6 @@ fun LoginComposable(homeViewModel: HomeViewModel) {
                 Text(text = "Sign In", fontSize = 15.sp)
             }
         }
-
     }
 }
 
