@@ -26,10 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.awantrixprojects.R
+import com.example.awantrixprojects.mvi.HomeContract
+import com.example.awantrixprojects.mvi.MVIHomeViewModel
 import com.example.awantrixprojects.ui.theme.AwantrixProjectsTheme
 import com.example.awantrixprojects.utils.HandelEvents
 import com.example.awantrixprojects.viewmodels.HomeViewModel
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 
@@ -37,46 +39,63 @@ import kotlinx.coroutines.launch
 fun Home() {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
+    val mviViewModel: MVIHomeViewModel = hiltViewModel()
     val scaffoldState = rememberScaffoldState()
     Scaffold(scaffoldState = scaffoldState) {}
 
-    LoginComposable(homeViewModel)
-    Observer(homeViewModel, scaffoldState)
+    LoginComposable(homeViewModel, mviViewModel)
+    Observer(homeViewModel, scaffoldState, mviViewModel.state, mviViewModel.effects.receiveAsFlow())
 
 }
 
 @Composable
-fun Observer(homeViewModel: HomeViewModel, scaffoldState: ScaffoldState) {
+fun Observer(
+    homeViewModel: HomeViewModel,
+    scaffoldState: ScaffoldState,
+    state: HomeContract.State,
+    effectFlow: Flow<HomeContract.Effect>
+) {
+//
+//    LaunchedEffect(key1 = true) {
+//
+//        homeViewModel.eventFlow.collectLatest {
+//            when (it) {
+//                is HandelEvents.ShowErrorMessages -> {
+//                    scaffoldState.snackbarHostState.showSnackbar(
+//                        message = it.messages.toString(),
+//                        actionLabel = "Okay"
+//                    )
+//                }
+//                is HandelEvents.ShowSuccessMessages -> {
+//                    scaffoldState.snackbarHostState.showSnackbar(
+//                        message = it.messages.toString(),
+//                        actionLabel = "Okay"
+//                    )
+//                }
+//            }
+//        }
+//
+//    }
 
-    LaunchedEffect(key1 = true) {
-
-        homeViewModel.eventFlow.collectLatest {
-            when (it) {
-                is HandelEvents.ShowErrorMessages -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = it.messages.toString(),
-                        actionLabel = "Okay"
-                    )
-                }
-                is HandelEvents.ShowSuccessMessages -> {
-                    scaffoldState.snackbarHostState.showSnackbar(
-                        message = it.messages.toString(),
-                        actionLabel = "Okay"
-                    )
-                }
+    LaunchedEffect(effectFlow) {
+        effectFlow.onEach { effect ->
+            if (effect is HomeContract.Effect.DataWasLoaded) {
+                scaffoldState.snackbarHostState.showSnackbar(
+                    message = "Item is saved",
+                    duration = SnackbarDuration.Short
+                )
+            } else {
+                scaffoldState.snackbarHostState.showSnackbar(
+                    message = "Item is failed to save",
+                    duration = SnackbarDuration.Short
+                )
             }
-        }
-
-        launch {
-
-        }
-
-
+        }.collect()
     }
 }
 
 @Composable
-fun LoginComposable(homeViewModel: HomeViewModel) {
+fun LoginComposable(homeViewModel: HomeViewModel, mviViewModel: MVIHomeViewModel) {
     val emailValue = remember {
         mutableStateOf("")
     }
@@ -172,10 +191,14 @@ fun LoginComposable(homeViewModel: HomeViewModel) {
             //login button
             Button(
                 onClick = {
-                    homeViewModel.sendData(
+                    mviViewModel.setData(
                         emailValue.value.toString(),
                         passwordValue.value.toString()
                     )
+//                    homeViewModel.sendData(
+//                        emailValue.value.toString(),
+//                        passwordValue.value.toString()
+//                    )
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.5f)

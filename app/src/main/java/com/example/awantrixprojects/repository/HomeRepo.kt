@@ -7,12 +7,9 @@ import javax.inject.Inject
 
 class HomeRepo @Inject constructor(private val dao: MyDao) {
 
-
-
-    suspend fun saveData(email: String, password: String) {
+    suspend fun saveData(email: String, password: String) : Long {
         val data = AuthModelClass(0, email, password, "", "")
-        val result = dao.InsertAuth(data)
-        Timber.i("Save $result")
+        return dao.InsertAuth(data)
     }
 
 }
