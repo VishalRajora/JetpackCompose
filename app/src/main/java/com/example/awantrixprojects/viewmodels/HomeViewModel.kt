@@ -22,6 +22,10 @@ class HomeViewModel @Inject constructor(val repo: HomeRepo) : ViewModel() {
     private val _eventFlow = MutableSharedFlow<HandelEvents>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+
+
+
+
     fun sendData(email: String, password: String) = viewModelScope.launch() {
         when {
             email.isBlank() or email.isEmpty()
