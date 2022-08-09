@@ -77,6 +77,9 @@ fun Observer(
 //
 //    }
 
+
+
+
     LaunchedEffect(effectFlow) {
         effectFlow.onEach { effect ->
             if (effect is HomeContract.Effect.DataWasLoaded) {
