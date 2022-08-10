@@ -30,8 +30,11 @@ class MVIHomeViewModel @Inject constructor(private val remoteSource: HomeRepo) :
 
 
     fun setData(email: String, password: String) = viewModelScope.launch {
+
         val result = remoteSource.saveData(email, password)
+
         Timber.i("InsideResult $result")
+
         if (result.toInt() > -1) {
             Timber.i("Inside")
             viewModelScope.launch {

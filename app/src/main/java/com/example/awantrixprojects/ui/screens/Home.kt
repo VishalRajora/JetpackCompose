@@ -39,6 +39,7 @@ import kotlinx.coroutines.launch
 fun Home() {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
+
     val mviViewModel: MVIHomeViewModel = hiltViewModel()
     val scaffoldState = rememberScaffoldState()
     Scaffold(scaffoldState = scaffoldState) {}
@@ -76,8 +77,6 @@ fun Observer(
 //        }
 //
 //    }
-
-
 
 
     LaunchedEffect(effectFlow) {

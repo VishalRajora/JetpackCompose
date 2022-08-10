@@ -12,4 +12,5 @@ class HomeContract {
         object DataWasLoaded : Effect()
         object DataWasFailed : Effect()
     }
+
 }

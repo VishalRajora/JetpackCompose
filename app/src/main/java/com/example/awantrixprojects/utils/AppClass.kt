@@ -11,7 +11,6 @@ class AppClass : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        // initialize timber in application class
         plant(Timber.DebugTree())
     }
 }
